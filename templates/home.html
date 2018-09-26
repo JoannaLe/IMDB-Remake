@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- JQuery -->
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<!-- <script src="static/js/script.js?v=2"></script> -->
+		<script>
+		$(document).ready(function(){
+			$(".clickable").click(function() {
+				console.log('hello');
+				console.log($(this).data("href"));
+				window.location = "/details/" + $(this).data("href") + "/";
+			});
+
+			$(".delete").click(function() {
+				movie = $(this).attr("id");
+				console.log(movie)
+				window.location = "/delete/" + movie;
+			});
+		});
+		</script>
+		<!-- Bootstrap -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	</head>
+
+	<style>
+ 	</style>
+
+	<body>
+		<h1>IMDb</h1>
+		<div></div>
+		<form method="GET" action="/add/">
+			<button id="add" type="submit" class="btn btn-info" formaction="/add/">Add Movie</button>
+		</form>
+		<form method="GET" action="/add/actor/">
+			<button id="add-actor" type="submit" class="btn btn-info" formaction="/add/">Add Actor and movies he/she starred in</button>
+		</form>
+		<br>
+		<div>
+			<input type="text" class="form-control" name="actor-input" placeholder="Enter actor name here">
+			<button id="search" type="submit" class="btn btn-success" formaction="/search/">Search Movies by this actor</button>
+			<button id="delete-actor" type="submit" class="btn btn-info" formaction="/deleteActor/">Delete Actor</button>
+		<div>
+		<table class="table table-hover">
+	      <thead class="thead-dark">
+	        <tr>
+	          <th scope="col">Movies</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        {% for name in data %}
+	          <tr data-href= "{{name}}" >
+	            <td class="clickable">{{ name }}</td>
+	            <td>
+	            	<form method="POST" action="/update/">
+	            		<button class="update" formaction="/update/">Update</button>
+	            	</form>
+	            </td>
+	            <td>
+	            	<button class="delete" id="{{name}}">x</button>
+	            </td>
+	          </tr>
+	        {% endfor %}
+	      </tbody>
+	    </table>
+
+	</body>
+</html>

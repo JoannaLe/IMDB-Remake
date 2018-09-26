@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- JQuery -->
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="static/js/script.js?v=2"></script>
+		<!-- Bootstrap -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	</head>
+
+	<style>
+ 	</style>
+
+	<body>
+		<h1>Update Movie</h1>
+		<div></div>
+		<form method="GET" action="/update/update/">
+			<small class="form-text text-muted">Re-enter each field you wish to change. Leave correct fields blank.</small>
+		  <div class="form-group">
+		    <label for="movie">Movie Name</label>
+		    <input type="text" id="movie-update" name="movie-update" class="form-control" placeholder="The Lion King">
+		  </div>
+		  <div class="form-group">
+		    <label for="year">Year</label>
+		    <input type="number" id="year-update" name="year-update" class="form-control" placeholder="1997">
+		  </div>
+		  <div class="form-group">
+		    <label for="actors">Actors</label>
+		    <input type="text" id="actors-update" name="actors-update" class="form-control" placeholder="Tigger, Eeyore, Pooh">
+		    <small class="form-text text-muted">Enter actor names separated by commas.</small>
+		  </div>
+		  <button id="updatemovie" formaction="/update/update/" type="submit" class="btn btn-primary">Update this Movie!</button>
+		</form>
+	</body>
+</html>

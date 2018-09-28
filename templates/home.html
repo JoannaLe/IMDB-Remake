@@ -22,48 +22,86 @@
 		</script>
 		<!-- Bootstrap -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	    <link rel="stylesheet" type="text/css" href="../static/style.css">
 	</head>
 
 	<style>
  	</style>
 
 	<body>
-		<h1>IMDb</h1>
-		<div></div>
-		<form method="GET" action="/add/">
-			<button id="add" type="submit" class="btn btn-info" formaction="/add/">Add Movie</button>
-		</form>
-		<form method="GET" action="/add/actor/">
-			<button id="add-actor" type="submit" class="btn btn-info" formaction="/add/">Add Actor and movies he/she starred in</button>
-		</form>
-		<br>
-		<div>
-			<input type="text" class="form-control" name="actor-input" placeholder="Enter actor name here">
-			<button id="search" type="submit" class="btn btn-success" formaction="/search/">Search Movies by this actor</button>
-			<button id="delete-actor" type="submit" class="btn btn-info" formaction="/deleteActor/">Delete Actor</button>
-		<div>
-		<table class="table table-hover">
-	      <thead class="thead-dark">
-	        <tr>
-	          <th scope="col">Movies</th>
-	        </tr>
-	      </thead>
-	      <tbody>
-	        {% for name in data %}
-	          <tr data-href= "{{name}}" >
-	            <td class="clickable">{{ name }}</td>
-	            <td>
-	            	<form method="POST" action="/update/">
-	            		<button class="update" formaction="/update/">Update</button>
-	            	</form>
-	            </td>
-	            <td>
-	            	<button class="delete" id="{{name}}">x</button>
-	            </td>
-	          </tr>
-	        {% endfor %}
-	      </tbody>
-	    </table>
+		<div class="row">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10">
+				<h1>IMDb</h1>
+				<br>
+				<div>
+					<input id="actor-input" type="text" class="form-control" name="actor-input" placeholder="Enter actor name here">
+					<button id="search" type="submit" class="btn btn-success" formaction="/search/">Search Songs by this same artist!</button>
+				</div>
+			</div>
+			<div class="col-md-1">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10">
+				<table class="table table-hover">
+			      <thead class="thead-dark">
+			        <tr>
+			          <th scope="col">Songs</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        {% for song in songs %}
+			          <tr data-href= "{{song.name}}" >
+			            <td class="clickable">{{ song.name }}</td>
+			            <td>
+			            	<form method="POST" action="/update/">
+			            		<button class="update" formaction="/update/">Update</button>
+			            	</form>
+			            </td>
+			            <td>
+			            	<button class="delete" id="{{song.name}}">x</button>
+			            </td>
+			          </tr>
+			        {% endfor %}
+			      </tbody>
+			    </table>
+			    <form method="GET" action="/add/">
+					<button id="add" type="submit" class="btn btn-info" formaction="/add/">Add Song</button>
+				</form>
+
+				<table class="table table-hover">
+			      <thead class="thead-dark">
+			        <tr>
+			          <th scope="col">Movies</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        {% for movie in movies %}
+			          <tr data-href= "{{movie.name}}" >
+			            <td class="clickable">{{ movie.name }}</td>
+			            <td>
+			            	<form method="POST" action="/update/">
+			            		<button class="update" formaction="/update/">Update</button>
+			            	</form>
+			            </td>
+			            <td>
+			            	<button class="delete" id="{{movie.name}}">x</button>
+			            </td>
+			          </tr>
+			        {% endfor %}
+			      </tbody>
+			    </table>
+			    <form method="GET" action="/add/movie/">
+					<button id="add-actor" type="submit" class="btn btn-info" formaction="/add/">Add Movie</button>
+				</form>
+			</div>
+			<div class="col-md-1">
+			</div>
+		</div>
 
 	</body>
 </html>

@@ -1,24 +1,19 @@
 from flask import Flask, request, redirect, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from model import db
+from model import app, db, Movie, Song
+import os
 # from app import app, models, db
 # from app.models import Movie
 
 db.create_all()
-app = Flask(__name__)
-
-
-data = {
-	'Crazy Rich Asians' : [2018, ['Constance Wu', 'Henry Golding', 'Michelle Yeoh']],
-	'La La Land' : [2016, ['Ryan Gosling', 'Emma Stone']],
-	'Harry Potter and the Sorcerer\'s Stone' : [2001, ['Daniel Radcliffe', 'Rupert Grint', 'Emma Watson']]
-}
+# os.system('python create_data.py')
 
 @app.route('/', methods=['GET'])
 def home():
 	# query all movies
-	Movie.add
-	return render_template('home.html', data=movies)
+	movies = Movie.query.all()
+	songs = Song.query.all()
+	return render_template('home.html', movies=movies, songs=songs)
 
 # go to movie details page
 @app.route('/details/<movie>/', methods=['GET'])
@@ -74,14 +69,14 @@ def delete(movie):
 	db.session.commit()
 
 	return render_template('home.html', data=data)
- 
-@app.route('/deleteActor/', methods=['GET'])
-def deleteActor():
-	actor_name = request.args['actor-input']
-	actor = Actor.query.filter_by(name=actor_name)
-	db.session.delete(actor)
-	db.session.commit()
-	return render_template('home.html', data=data)
+
+# @app.route('/deleteActor/', methods=['GET'])
+# def deleteActor():
+# 	actor_name = request.args['actor-input']
+# 	actor = Actor.query.filter_by(name=actor_name)
+# 	db.session.delete(actor)
+# 	db.session.commit()
+# 	return render_template('home.html', data=data)
 
 @app.route('/search/', methods=['GET'])
 def search():

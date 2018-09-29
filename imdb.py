@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from model import app, db, Movie, Song
+from collections import defaultdict
 import os
 # from app import app, models, db
 # from app.models import Movie
@@ -10,7 +11,7 @@ db.create_all()
 
 @app.route('/', methods=['GET'])
 def home():
-	# query all movies
+	# query all movies and songs
 	movies = Movie.query.all()
 	songs = Song.query.all()
 	return render_template('home.html', movies=movies, songs=songs)
@@ -80,7 +81,16 @@ def delete(movie):
 
 @app.route('/search/', methods=['GET'])
 def search():
-	actor_name = request.args['actor-input']
-	movies = Actor.query.filter_by(name=actor_name)
+	song_name = request.args['song-input']
+	song = Song.query.filter_by(name=song_name).first()
+
+	# { artist : list of (song, artists, movies)}
+	data = {}
+	for artist in song.artists:
+		items = []
+		for s1 in artist.songs:
+			print s1.name, s1.artists, s1.movies
+			items.append((s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]))
+		data[artist] = items
 	
-	return render_template("home.html", data=movies)
+	return render_template("results.html", data=data)

@@ -1,0 +1,16 @@
+#actor-input {
+	display: inline;
+	size: 70%;
+}
+
+#search {
+	display: inline;
+}
+
+.song {
+	display: block;
+}
+
+.movie {
+	display: block;
+}

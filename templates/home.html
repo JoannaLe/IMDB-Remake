@@ -22,7 +22,7 @@
 		</script>
 		<!-- Bootstrap -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	    <link rel="stylesheet" type="text/css" href="../static/style.css">
+	    <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
 	</head>
 
 	<style>
@@ -36,8 +36,11 @@
 				<h1>IMDb</h1>
 				<br>
 				<div>
-					<input id="actor-input" type="text" class="form-control" name="actor-input" placeholder="Enter actor name here">
-					<button id="search" type="submit" class="btn btn-success" formaction="/search/">Search Songs by this same artist!</button>
+					<form>
+						<input id="song-input" type="text" class="form-control" name="song-input" placeholder="Enter song name here">
+						<button id="search" type="submit" class="btn btn-success" 
+						formaction="/search/">Search songs by the same artist!</button>
+					</form>
 				</div>
 			</div>
 			<div class="col-md-1">
@@ -51,12 +54,21 @@
 			      <thead class="thead-dark">
 			        <tr>
 			          <th scope="col">Songs</th>
+			          <th scope="col">Movies Featured In:</th>
 			        </tr>
 			      </thead>
 			      <tbody>
 			        {% for song in songs %}
 			          <tr data-href= "{{song.name}}" >
-			            <td class="clickable">{{ song.name }}</td>
+			            <td class="clickable">
+			            	<div class="song">
+				            	{{ song.name }}
+				            	{{ song.artists|join(", ", attribute='name') }} 
+			            	</div>
+			        	</td>
+			            <td>
+				            {{ song.movies|join(", ", attribute='name') }} 
+			        	</td>
 			            <td>
 			            	<form method="POST" action="/update/">
 			            		<button class="update" formaction="/update/">Update</button>
@@ -70,19 +82,25 @@
 			      </tbody>
 			    </table>
 			    <form method="GET" action="/add/">
-					<button id="add" type="submit" class="btn btn-info" formaction="/add/">Add Song</button>
+					<button id="add" type="submit" class="btn btn-info" formaction="/add/song/">Add Song</button>
 				</form>
 
 				<table class="table table-hover">
 			      <thead class="thead-dark">
 			        <tr>
 			          <th scope="col">Movies</th>
+			          <th scope="col">Year</th>
 			        </tr>
 			      </thead>
 			      <tbody>
 			        {% for movie in movies %}
 			          <tr data-href= "{{movie.name}}" >
-			            <td class="clickable">{{ movie.name }}</td>
+			            <td class="clickable">
+			            	<div class="movie">
+					            {{ movie.name }}
+			        		</div>
+			        	</td>
+			        	<td>{{ movie.year }}</td>
 			            <td>
 			            	<form method="POST" action="/update/">
 			            		<button class="update" formaction="/update/">Update</button>

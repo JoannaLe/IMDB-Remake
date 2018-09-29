@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- JQuery -->
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<!-- <script src="static/js/script.js?v=2"></script> -->
+
+		<!-- Bootstrap -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	    <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
+	</head>
+
+	<style>
+ 	</style>
+
+	<body>
+		<div class="row">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10">
+				<h1>IMDb</h1>
+				<br>
+				<div>
+					<input id="actor-input" type="text" class="form-control" name="actor-input" placeholder="Enter song name here">
+					<button id="search" type="submit" class="btn btn-success" formaction="/search/">Search songs by the same artist!</button>
+				</div>
+			</div>
+			<div class="col-md-1">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10">
+				{% for artist, details in data.iteritems() %}
+					<div>
+						<h3>Other Songs by {{ artist.name }}</h3>
+					</div>
+					<table class="table table-hover">
+				      <thead class="thead-dark">
+				        <tr>
+				          <th scope="col">Songs</th>
+				          <th scope="col">Movies featured in:</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				        {% for song, artists, movies in details %}
+				          <tr data-href= "{{song.name}}" >
+				            <td class="clickable">
+				            	<div class="song">
+					            	<h4>{{ song }}</h4>
+					            	<!-- display artists here under song name -->
+					            	{{ artists|join(", ") }}
+				            	</div>
+				            </td>
+				            <td>
+				            	<!-- display movies here -->
+				            	<h4>{{ movies|join(", ") }}</h4>
+				            </td>
+				            <td>
+				            	<form method="POST" action="/update/">
+				            		<button class="update" formaction="/update/">Update</button>
+				            	</form>
+				            </td>
+				            <td>
+				            	<button class="delete" id="{{song.name}}">x</button>
+				            </td>
+				          </tr>
+				        {% endfor %}
+				      </tbody>
+				    </table>
+				    <form method="GET" action="/add/">
+						<button id="add" type="submit" class="btn btn-info" formaction="/add/">Add Song</button>
+					</form>
+				{% endfor %}
+			</div>
+			<div class="col-md-1">
+			</div>
+		</div>
+
+	</body>
+</html>

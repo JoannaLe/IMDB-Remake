@@ -33,6 +33,7 @@ class Movie(db.Model):
 	name = db.Column(db.String(20))
 	year = db.Column(db.Integer)
 	actors = db.relationship('Actor', secondary=actor2movie, backref=db.backref('movie-actors', lazy='dynamic'))
+	songs = db.relationship('Song', secondary=song2movie, backref=db.backref('movie-songs', lazy='dynamic'))
 
 class Song(db.Model):
 	song_id = db.Column(db.Integer, primary_key=True)

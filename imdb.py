@@ -1,13 +1,12 @@
+from __future__ import print_function
 from flask import Flask, request, redirect, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from model import app, db, Movie, Song
 from collections import defaultdict
-import os
+import os, sys
+
 # from app import app, models, db
 # from app.models import Movie
-
-db.create_all()
-# os.system('python create_data.py')
 
 @app.route('/', methods=['GET'])
 def home():
@@ -47,6 +46,10 @@ def new_update():
 	db.session.commit()
 	return render_template("update.html", data=data)
 
+@app.route('/add/song',  methods=['GET'])
+def add_song():
+	return render_template("add-song.html", data=data)
+
 @app.route('/add/new/', methods=['GET'])
 def new_movie():
 	movie = request.args['movie']
@@ -84,13 +87,19 @@ def search():
 	song_name = request.args['song-input']
 	song = Song.query.filter_by(name=song_name).first()
 
+	if song is None:
+		return render_template("not_found.html")
+
 	# { artist : list of (song, artists, movies)}
 	data = {}
 	for artist in song.artists:
 		items = []
 		for s1 in artist.songs:
-			print s1.name, s1.artists, s1.movies
-			items.append((s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]))
+			if s1.name == song_name:
+				items.insert(0, (s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]))
+			else:
+				items.append((s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]))
+			print((s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]), file=sys.stderr)
 		data[artist] = items
 	
-	return render_template("results.html", data=data)
+	return render_template("results.html", data=data, search_term=song_name)

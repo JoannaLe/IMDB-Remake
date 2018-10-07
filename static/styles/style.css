@@ -1,10 +1,35 @@
-#actor-input {
-	display: inline;
-	size: 70%;
+.row {
+	padding-bottom: 10px;
 }
 
-#search {
-	display: inline;
+#logo {
+	background-color: #F0E15D;
+	width: 150px;
+	height: 50px;
+	text-align: center;
+	display: block;
+	color: inherit;
+
+}
+
+#logo:hover {
+	text-decoration: none;
+}
+
+.searchbar {
+    display: block;
+    text-align: center;
+    padding-top: 200px;
+    min-width: 50%;
+  	min-height: 50%;
+}
+
+#searchbar-results {
+	width: 90%;
+    display: block;
+    text-align: center;
+	min-width: 50%;
+  	min-height: 50%;
 }
 
 .song {
@@ -13,4 +38,36 @@
 
 .movie {
 	display: block;
+}
+
+.ui-autocomplete-input{
+	width: 100%;
+}
+
+.ui-menu.ui-autocomplete{
+	z-index: 99!important;
+}
+
+.ui-menu-item {
+	z-index: 99!important;
+	background: white;
+}
+
+body {
+	/*background-image: url("/static/images/lalaland.jpg");*/
+	margin: 10px;
+	background-position: center;
+}
+
+body::after {
+  content: "";
+  background-image: url("/static/images/lalaland.jpg");  
+  background-size: cover;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
 }

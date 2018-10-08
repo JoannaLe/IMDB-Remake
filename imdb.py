@@ -2,11 +2,8 @@ from __future__ import print_function
 from flask import Flask, request, redirect, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from model import app, db, Movie, Song
-from collections import defaultdict
+from forms import LoginForm
 import os, sys
-
-# from app import app, models, db
-# from app.models import Movie
 
 @app.route('/', methods=['GET'])
 def home():
@@ -14,6 +11,33 @@ def home():
 	movies = Movie.query.all()
 	songs = Song.query.all()
 	return render_template('home.html', movies=movies, songs=songs)
+
+@app.route('/login/', methods=['POST'])
+def login():
+	form = LoginForm()
+	return render_template('login.html', form=form)
+
+@app.route('/search/', methods=['GET'])
+def search():
+	song_name = request.args['song-input']
+	song = Song.query.filter_by(name=song_name).first()
+
+	if song is None:
+		return render_template("not_found.html")
+
+	# { artist : list of (song, artists, movies)}
+	data = {}
+	for artist in song.artists:
+		items = []
+		for s1 in artist.songs:
+			if s1.name == song_name:
+				items.insert(0, (s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]))
+			else:
+				items.append((s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]))
+			print((s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]), file=sys.stderr)
+		data[artist] = items
+	
+	return render_template("results.html", data=data, search_term=song_name)
 
 # go to movie details page
 @app.route('/details/<movie>/', methods=['GET'])
@@ -81,25 +105,3 @@ def delete(movie):
 # 	db.session.delete(actor)
 # 	db.session.commit()
 # 	return render_template('home.html', data=data)
-
-@app.route('/search/', methods=['GET'])
-def search():
-	song_name = request.args['song-input']
-	song = Song.query.filter_by(name=song_name).first()
-
-	if song is None:
-		return render_template("not_found.html")
-
-	# { artist : list of (song, artists, movies)}
-	data = {}
-	for artist in song.artists:
-		items = []
-		for s1 in artist.songs:
-			if s1.name == song_name:
-				items.insert(0, (s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]))
-			else:
-				items.append((s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]))
-			print((s1.name, [artist.name for artist in s1.artists], [movie.name for movie in s1.movies]), file=sys.stderr)
-		data[artist] = items
-	
-	return render_template("results.html", data=data, search_term=song_name)

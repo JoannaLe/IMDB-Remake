@@ -40,6 +40,7 @@ class Song(db.Model):
 	name = db.Column(db.String(20))
 	artists = db.relationship('Artist', secondary=artist2song, backref=db.backref('song-artists', lazy='dynamic'))
 	movies = db.relationship('Movie', secondary=song2movie, backref=db.backref('song-movies', lazy='dynamic'))
+	image = db.Column(db.String(200))
 
 class Artist(db.Model):
 	artist_id = db.Column(db.Integer, primary_key=True)

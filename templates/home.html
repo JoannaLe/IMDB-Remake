@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<form autocomplete="off">
+<form autocomplete="off" action="/search/">
 	<div class="searchbar">
-			<input class="song-input form-control" id="song-input1" type="text" name="song-input" placeholder="Enter song name here">
+		<div id="title"><b>movie soundtracks</b></div>
+		_______________________________________________
+		<h3>Discover new songs from your favorites.<h3>
 		<br>
-			<button id="search" type="submit" class="btn btn-success" 
-		formaction="/search/">Search songs by the same artist!</button>
+		<input class="song-input form-control" id="song-input1" type="text" name="song-input" placeholder="Enter a song name to find movie soundtracks by the same artist.">
+		<button type="submit" class="btn">
+			<span class="glyphicon glyphicon-search"></span>
+		</button>
 	</div>
 </form>
 {% endblock %}

@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="row">
-	<form>
+	<form action="/search/">
 		<div id="searchbar-results">
-				<input class="song-input form-control" id="song-input2" type="text" name="song-input" value="{{ search_term }}">
+			<input class="song-input form-control" id="song-input2" type="text" name="song-input" value="{{ search_term }}">
 			<br>
-				<button id="search2" type="submit" class="btn btn-success" formaction="/search/">Search songs by the same artist!</button>
+			<span>
+				<button type="submit" class="btn">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</span>
 		</div>
 	</form>
 </div>
@@ -15,7 +19,7 @@
 			<div>
 				<h3>Other Songs by {{ artist.name }}</h3>
 			</div>
-			<table class="table table-striped table-dark table-hover">
+			<table class="table table-hover">
 		      <thead>
 		        <tr>
 		          <th scope="col">Songs</th>
@@ -34,24 +38,15 @@
 		            	</div>
 		            </td>
 		            <td>
-		            	<!-- display movies here -->
-		            	<h4>{{ movies|join(", ") }}</h4>
-		            </td>
-		            <td>
-		            	<form method="POST" action="/update/">
-		            		<button class="btn btn-primary update" formaction="/update/">Update</button>
-		            	</form>
-		            </td>
-		            <td>
-		            	<button class="btn btn-danger delete" id="{{song.name}}">x</button>
+		            	<div class="movies">
+			            	<!-- display movies here -->
+			            	<h4>{{ movies|join(", ") }}</h4>
+		            	</div>
 		            </td>
 		          </tr>
 		        {% endfor %}
 		      </tbody>
 		    </table>
-		    <form method="GET" action="/add/">
-				<button id="add" type="submit" class="btn btn-info" formaction="/add/">Add Song</button>
-			</form>
 		{% endfor %}
 	</div>
 </div>

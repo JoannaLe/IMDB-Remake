@@ -1,8 +1,8 @@
 from __future__ import print_function
-from flask import Flask, request, redirect, render_template, request, jsonify
+from flask import Flask, request, redirect, render_template, session, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
-from model import app, db, Movie, Song
-from forms import LoginForm
+from model import app, db, login, Movie, Song, User
+from forms import LoginForm, RegistrationForm
 import os, sys
 
 @app.route('/', methods=['GET'])
@@ -12,10 +12,27 @@ def home():
 	songs = Song.query.all()
 	return render_template('home.html', movies=movies, songs=songs)
 
-@app.route('/login/', methods=['POST'])
+@app.route('/login/', methods=['GET','POST'])
 def login():
 	form = LoginForm()
+	if form.validate_on_submit():
+		session['username'] = request.form['username']
+		flash('Login requested for user {}'.format(form.username.data))
+		return redirect('/')
 	return render_template('login.html', form=form)
+
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+	# validate registration info and create new user
+	form = RegistrationForm()
+	if request.method == 'POST' and form.validate():
+		new_user = User(username=form.username.data)
+		new_user.set_password(form.password.data)
+		db.session.add(new_user)
+		flash('Registration Successful.')
+		return redirect(url_for('login'))
+	# get request for registration page
+	return render_template('register.html', form=form)
 
 @app.route('/search/', methods=['GET'])
 def search():

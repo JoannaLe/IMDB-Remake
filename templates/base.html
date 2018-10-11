@@ -14,10 +14,15 @@
 
 	<body>
 		<div class="container">
-			<div class="row">
-				<a id="logo" href="/">
-					<h1><strong>ISDb</strong></h1>
+			<div class="row header">
+				<a class="btn-lg" id="logo" href="/">
+					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 				</a>
+				<div class="accounts">
+					<a id="login" class="badge badge-secondary" href="{{ url_for('login') }}">Login</a>
+					<br>
+					<a id="signup" class="badge badge-secondary" href="{{ url_for('signup') }}">Register</a>
+				</div>
 			</div>
 			{% block content %}
 			{% endblock %}

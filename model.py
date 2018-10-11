@@ -1,9 +1,19 @@
 from flask import Flask
+from config import Config
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config.from_object(Config)
+print('***CONFIGURED**')
 db = SQLAlchemy(app)
+login = LoginManager(app)
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 actor2movie = db.Table('actor2movie',
 	db.Column('actor.id', db.Integer, db.ForeignKey('actor.actor_id')),
@@ -46,3 +56,15 @@ class Artist(db.Model):
 	artist_id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(20))
 	songs = db.relationship('Song', secondary=artist2song, backref=db.backref('artist-songs', lazy='dynamic'))
+
+class User(UserMixin, db.Model):
+	user_id = db.Column(db.Integer, primary_key=True)
+	username = db.Column(db.String(20))
+	email = db.Column(db.String(40))
+	password_hash = db.Column(db.String(128))
+	# songs = db.Column()
+	def set_password(self, password):
+		self.password_hash = generate_password_hash(password)
+
+	def check_password(self, password):
+		return check_password_hash(self.password_hash, password)

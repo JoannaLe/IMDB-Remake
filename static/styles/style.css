@@ -3,33 +3,61 @@
 }
 
 #logo {
-	background-color: #F0E15D;
-	width: 150px;
-	height: 50px;
-	text-align: center;
-	display: block;
-	color: inherit;
-
+	background-color: gray;
+	width: 40px;
+	height: 40px;
+	color: white;
 }
 
 #logo:hover {
 	text-decoration: none;
 }
 
+.header {
+	display: inline;
+}
+
+#login {
+	position: absolute;
+	right: 5px;
+	top: 20px;
+}
+
+#signup {
+	position: absolute;
+	right: 60px;
+	top: 20px;
+}
+
+.signup {
+	display: inline-block;
+}
+
+#title {
+	font-size: 36pt;
+	padding: 10px;
+}
+
 .searchbar {
-    display: block;
     text-align: center;
-    padding-top: 200px;
-    min-width: 50%;
+    padding-top: 150px;
   	min-height: 50%;
 }
 
 #searchbar-results {
-	width: 90%;
     display: block;
     text-align: center;
-	min-width: 50%;
   	min-height: 50%;
+}
+
+.movies {
+	display: block;
+}
+
+.song-input {
+	margin-left: auto;
+	margin-right: auto;
+	display: inline;
 }
 
 .song {
@@ -41,7 +69,8 @@
 }
 
 .ui-autocomplete-input{
-	width: 100%;
+	text-align: center;
+	width: 60%;
 }
 
 .ui-menu.ui-autocomplete{
@@ -57,9 +86,11 @@ body {
 	/*background-image: url("/static/images/lalaland.jpg");*/
 	margin: 10px;
 	background-position: center;
+	background-color: lightgray;
+	font-family: "Georigia", Times, serif;
 }
 
-body::after {
+/*body::after {
   content: "";
   background-image: url("/static/images/lalaland.jpg");  
   background-size: cover;
@@ -70,4 +101,4 @@ body::after {
   right: 0;
   position: absolute;
   z-index: -1;   
-}
+}*/

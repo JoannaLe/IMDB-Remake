@@ -2,13 +2,13 @@
 
 import model
 from model import db
-from csv import DictReader
 from io import open
+from csv import DictReader
 
 db.drop_all()
 db.create_all()
 
-with open('../data/movies.csv', 'r', encoding='utf-8-sig') as movies_file:
+with open('data/movies.csv', 'r', encoding='utf-8-sig') as movies_file:
 	reader = DictReader(movies_file)
 	for row in reader:
 		new_movie = model.Movie(name=row['name'], year=row['year'])
@@ -28,7 +28,7 @@ with open('../data/movies.csv', 'r', encoding='utf-8-sig') as movies_file:
 
 		db.session.add(new_movie)
 
-with open('../data/songs.csv', 'r', encoding='utf-8-sig') as songs_file:
+with open('data/songs.csv', 'r', encoding='utf-8-sig') as songs_file:
 	reader = DictReader(songs_file)
 	for row in reader:
 		new_song = model.Song(name=row['name'])
